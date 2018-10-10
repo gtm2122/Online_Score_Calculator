@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>Reusable Form Demo</title>
+       <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+    </head>
+    <body>
+ 
+ 
+<div class="container">
+ 
+ 
+  <h2>Flask Web Form</h2>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="indication">indication:</label>
+      <input type="text" class="form-control" id="indication" name="indication" placeholder="What's your name?">
+      <br>
+      <label for="age">age:</label>
+      <input type="text" class="form-control" id="age" name="age" placeholder="What's your name?">
+      <br>
+      <label for="sex">sex:</label>
+      <input type="text" class="form-control" id="sex" name="sex" placeholder="What's your name?">
+      <br>
+      <label for="bmi">bmi:</label>
+      <input type="text" class="form-control" id="bmi" name="bmi" placeholder="What's your name?">
+      <br>
+      <label for="Ethnicity">ethnicity:</label>
+      <input type="text" class="form-control" id="ethnicity" name="ethnicity" placeholder="What's your name?">
+      <br>
+      <label for="Height">height:</label>
+      <input type="text" class="form-control" id="height" name="height" placeholder="What's your name?">
+      <br>
+      <label for="Weight">weight:</label>
+      <input type="text" class="form-control" id="weight" name="weight" placeholder="What's your name?">
+      <br>
+      <label for="htn">htn:</label>
+      <input type="text" class="form-control" id="htn" name="htn" placeholder="What's your name?">
+      <br>
+      <label for="dm">dm:</label>
+      <input type="text" class="form-control" id="dm" name="dm" placeholder="What's your name?">
+      <br>
+      <label for="chol">chol:</label>
+      <input type="text" class="form-control" id="chol" name="chol" placeholder="What's your name?">
+      <br>
+      <label for="total_chol">total_chol:</label>
+      <input type="text" class="form-control" id="total_chol" name="total_chol" placeholder="What's your name?">
+      <br>
+      <label for="ldl">ldl:</label>
+      <input type="text" class="form-control" id="ldl" name="ldl" placeholder="What's your name?">
+      <br>
+      <label for="hdl">hdl:</label>
+      <input type="text" class="form-control" id="hdl" name="hdl" placeholder="What's your name?">
+      <br>
+      <label for="famhx">famhx:</label>
+      <input type="text" class="form-control" id="famhx" name="famhx" placeholder="What's your name?">
+      <br>
+      <label for="smokecurrent">smokecurrent:</label>
+      <input type="text" class="form-control" id="smokecurrent" name="smokecurrent" placeholder="What's your name?">
+      <br>
+      <label for="smokepast">smokepast:</label>
+      <input type="text" class="form-control" id="smokepast" name="smokepast" placeholder="What's your name?">
+      <br>
+      <label for="renal_insufficiency">renal_insufficiency:</label>
+      <input type="text" class="form-control" id="renal_insufficiency" name="renal_insufficiency" placeholder="What's your name?">
+      <br>
+      <label for="creatinine">creatinine:</label>
+      <input type="text" class="form-control" id="creatinine" name="creatinine" placeholder="What's your name?">
+      <br>
+      <label for="pv_disease">pv_disease:</label>
+      <input type="text" class="form-control" id="pv_disease" name="pv_disease" placeholder="What's your name?">
+      <br>
+      <label for="cv_disease">cv_disease:</label>
+      <input type="text" class="form-control" id="cv_disease" name="cv_disease" placeholder="What's your name?">
+      <br>
+      <label for="chest_pain">chest_pain:</label>
+      <input type="text" class="form-control" id="chest_pain" name="chest_pain" placeholder="What's your name?">
+      <br>
+      <label for="exertion">exertion:</label>
+      <input type="text" class="form-control" id="exertion" name="exertion" placeholder="What's your name?">
+      <br>
+      <label for="relief">relief:</label>
+      <input type="text" class="form-control" id="relief" name="relief" placeholder="What's your name?">
+      <br>
+      <label for="typicality">typicality:</label>
+      <input type="text" class="form-control" id="typicality" name="typicality" placeholder="What's your name?">
+      <br>
+      <label for="sob">sob:</label>
+      <input type="text" class="form-control" id="sob" name="sob" placeholder="Your email will be used to contact you.">
+      <br>
+      <label for="cac">cac:</label>
+      <input type="text" class="form-control" id="cac" name="cac" placeholder="Enter a password.">
+ 
+ 
+    </div>
+    <button type="submit" class="btn btn-success">Sign Up</button>
+  </form>
+ 
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+</div>
+<br>            
+</div>
+</div>
+</body>
+</html>
