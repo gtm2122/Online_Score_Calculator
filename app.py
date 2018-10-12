@@ -3,10 +3,10 @@ from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField,SelectField
 
 # App config.
-DEBUG = True
+#DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+#app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 import pickle
 
 import numpy as np
