@@ -1,7 +1,7 @@
 # pythonspot.com
 from flask import Flask, render_template, flash, request
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
- 
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField,SelectField
+
 # App config.
 DEBUG = True
 app = Flask(__name__)
@@ -40,22 +40,72 @@ class ReusableForm(Form):
     sob = TextField('sob:',default=np.nan)
     cac = TextField('cac:',default=np.nan)
     
+
+class ContactForm(Form):
     
+    
+    indication = SelectField('indication',default='',choices=[('',''),('1','chest pain')\
+                                                                  ,('2','Dyspnea'),('3','Asymptomatic')\
+                                                                 ,('4','Preoperative'),('5','EP'),\
+                                                                 ('6','Congenital'),('7','Other')])
+    age = TextField('Age:',default='')
+    sex = SelectField('Sex:',default='',choices=[('',''),\
+                                                     ('1','Male'),\
+                                                      ('0','Female')
+                                                    ])
+    bmi = TextField('BMI:',default='')
+    ethnicity = SelectField('Ethnicity:',default='',choices=[('',''),\
+                                                     ('1','Caucasian'),\
+                                                      ('2','Africa'),\
+                                                      ('3','Latin America'),\
+                                                      ('4','Munich'),\
+                                                      ('5','South Asian'),\
+                                                      ('6','Middle Eastern'),\
+                                                      ('7','Other or mixed')
+                                                    ])
+
+    height = TextField('Height:' ,default='')
+    weight = TextField('Weight:',default='')
+    htn = SelectField('htn:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    dm = SelectField('dm:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    chol = SelectField('chol:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    total_chol = TextField('total_chol:',default='')
+    ldl = TextField('ldl:',default='')
+    hdl = TextField('hdl:',default='')
+    famhx = SelectField('famhx:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    smokecurrent =SelectField('smokecurrent:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    smokepast = SelectField('smokepast:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    renal_insufficiency = SelectField('renal_insufficiency:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    creatinine = TextField('creatinine:',default='')
+    pv_disease = SelectField('pv_disease:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    cv_disease = SelectField('cv_disease:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    chest_pain = SelectField('chest_pain:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    exertion = SelectField('exertion:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    relief = SelectField('Relief:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    typicality = SelectField('typicality:',default='',choices=[('',''),('1','noncardiac'),\
+                                                                 ('2','atypical'),('0','no pain'),\
+                                                                ('3','typical')])
+    sob = SelectField('sob:',default='',choices=[('',''),('1','Yes'),('0','No')])
+    cac = TextField('cac:',default='')
+    submit = SubmitField("Send")
+    
+
+
 @app.route("/", methods=['GET', 'POST'])
 def hello():
-    form = ReusableForm(request.form)
+    form = ContactForm(request.form)
     
     #if request.method == 'GET':
 #     for k in form:
 #         print(k)
 #         form[k] = ''
 
-    print (form.errors)
+    #print (form.errors)
     if request.method == 'POST':
         
         inp_var = []
         for k in request.form:
-            print(k)
+            #print(k)
             inp_var.append(request.form[k])
         
         #print (name, " ", email, " ", password) 
@@ -64,20 +114,32 @@ def hello():
 #             flash('Thanks for registration ' + name)
 #         else:
 #             flash('Error: All the form fields are required. ')
-        pickle.dump(inp_var,open('inp_var.pkl','wb'))
+        pickle.dump(inp_var[:-1],open('inp_var.pkl','wb'))
         
         return result()
-    return render_template('hello.html', form=form)
+    return render_template('hello2.html', form=form)
 
 
 @app.route("/result",methods=['GET'])
 def result():
     input_var = pickle.load(open('inp_var.pkl','rb'))
-    input_var = np.array([float(i) if len(i)>0 else np.nan for i in input_var ]).reshape(1,-1)
+    #print(input_var)
+    
+    p=input_var
+    
+    for i in range(0,len(p)):
+        if p[i]=='':
+            p[i]=np.nan
+        else:
+            p[i]=float(p[i])
+
+    input_var = np.array(p).reshape(1,-1)
     pickle.dump(input_var,open('blabla.pkl','wb'))
     
     model = pickle.load(open('sigmoid_calib_model2_50_MODEL.pkl','rb'))
     prob = model.predict_proba(input_var)
+    #return '<p>Probability of event = '+''.join([str(i) for i in input_var])+'<p>'
+    
     return '<p>Probability of event = '+str(prob[0,1])+'<p>'
     
 
